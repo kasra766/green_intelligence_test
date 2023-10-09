@@ -18,8 +18,7 @@
     "notistack": "^3.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.47.0",
-    "zustand": "^4.4.3"
+    "react-hook-form": "^7.47.0"
   },
   "devDependencies": {
     "@types/node": "^20",
