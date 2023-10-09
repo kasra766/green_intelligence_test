@@ -1,5 +1,5 @@
 import { searchParamType } from "@/app/(protect-route)/page";
-import { getData } from "./get-info";
+import {  getData } from "./get-info";
 import { stringToHtmlConverter } from "./string-to-html-converter";
 export async function HomePage({
   searchParams,
@@ -7,14 +7,24 @@ export async function HomePage({
   searchParams: searchParamType;
 }) {
   const ticket = searchParams["ticket"];
-  const userData = getData(
+  const userData = getData({
     ticket,
-    "http://localhost:3000/api/test/users/getData"
-  );
+    url: "http://shserver.top:8080/test/users/getData",
+    method:"GET"
+  });
 
-  const [user] = await Promise.all([userData]);
+  const data = { message: "Write me a chrome extension code" };
+  const codeData = getData({
+    ticket,
+    url: "http://shserver.top:8080/test/users/getCode",
+    data,
+    method:"POST"
+  });
 
-  const htmlString = user.data.result;
+  const [user, code] = await Promise.all([userData, codeData]);
+  console.log(code);
+
+  const htmlString = user.result;
 
   return (
     <div

@@ -1,3 +1,4 @@
+"use client"
 import { SnackbarProvider } from "notistack";
 import ThemeRegistry from "../theme-provider";
 

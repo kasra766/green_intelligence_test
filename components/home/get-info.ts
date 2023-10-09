@@ -2,19 +2,32 @@ import { type searchParamType } from "@/app/(protect-route)/page";
 
 type methodType = "GET" | "POST" | "PUT" | "DELETE";
 
-export async function getData(
-  ticket: searchParamType[string],
-  url: string,
-  method: methodType = "GET"
-) {
+interface getDataArg {
+  ticket: searchParamType[string];
+  url: string;
+  method: methodType;
+  data?: { [key: string]: string };
+}
+export async function getData({
+  ticket,
+  url,
+  method,
+  data,
+}: getDataArg) {
   if (typeof ticket === "string") {
-    const res = await fetch(url, {
+    const reqConfig: RequestInit = {
       method,
       headers: {
         "Content-Type": "application/json",
-        ticket,
+        Authorization: `Bearer ${ticket}`,
       },
-    });
+    };
+
+    if (method === "POST" && data) {
+      reqConfig["body"] = JSON.stringify(data);
+    }
+    
+    const res = await fetch(url, reqConfig);
 
     return res.json();
   }
