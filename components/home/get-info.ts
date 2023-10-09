@@ -5,31 +5,20 @@ type methodType = "GET" | "POST" | "PUT" | "DELETE";
 interface getDataArg {
   ticket: searchParamType[string];
   url: string;
-  method: methodType;
-  data?: { [key: string]: string };
 }
-export async function getData({
-  ticket,
-  url,
-  method,
-  data,
-}: getDataArg) {
+export async function getData({ ticket, url }: getDataArg) {
   if (typeof ticket === "string") {
     const reqConfig: RequestInit = {
-      method,
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${ticket}`,
       },
     };
 
-    if (method === "POST" && data) {
-      reqConfig["body"] = JSON.stringify(data);
-    }
-    
     const res = await fetch(url, reqConfig);
 
-    return res.json();
+    return await res.json();
   }
 
   throw Error("someThing is wrong");

@@ -1,5 +1,6 @@
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/mock/api";
 
 interface formDataType {
   uname: string;
@@ -10,7 +11,7 @@ export function useSubmit() {
   const router = useRouter();
   const submit = async (data: formDataType) => {
     try {
-      const res = await fetch("http://shserver.top:8080/test/users/login", {
+      const res = await fetch(`${BASE_URL}/test/users/login`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
