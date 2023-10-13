@@ -18,7 +18,7 @@ export async function getData({ ticket, url }: getDataArg) {
 
     const res = await fetch(url, reqConfig);
 
-    return await res.json();
+    return res.json();
   }
 
   throw Error("someThing is wrong");

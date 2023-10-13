@@ -19,9 +19,11 @@ export async function HomePage({
   return (
     <>
       <div
-        dangerouslySetInnerHTML={{ __html: stringToHtmlConverter(htmlString) }}
+        dangerouslySetInnerHTML={{
+          __html: stringToHtmlConverter(htmlString),
+        }}
       ></div>
-      <StreamData/>
+      <StreamData />
     </>
   );
 }

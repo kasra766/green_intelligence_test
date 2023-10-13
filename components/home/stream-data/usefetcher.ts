@@ -7,7 +7,7 @@ import { BASE_URL } from "@/mock/api";
 
 export function useFetcher() {
   const [data, setData] = useState<any[]>([]);
-
+const [dataFetchingDone,setDone]=useState(false)
   const searchParams = useSearchParams();
   const ticket = searchParams.get("ticket");
   const bodyData = { message: "Write me a chrome extension code" };
@@ -19,7 +19,7 @@ export function useFetcher() {
         method: "POST",
         body: JSON.stringify(bodyData),
         headers: {
-          Accept: "text/event-stream",
+          "Content-Type":"application/json",
           Authorization: `Bearer ${ticket}`,
         },
         signal,
@@ -39,6 +39,9 @@ export function useFetcher() {
           console.log(event.data);
           const parsedData = JSON.parse(event.data);
           setData((data) => [...data, parsedData]);
+          if(parsedData.remainedTokens==0){
+            setDone(true)
+          }
         },
         onclose() {
           console.log("Connection closed by the server");
@@ -56,5 +59,5 @@ export function useFetcher() {
     };
   }, []);
 
-  return data;
+  return dataFetchingDone?data:[]
 }
